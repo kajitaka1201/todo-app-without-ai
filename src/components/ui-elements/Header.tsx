@@ -1,7 +1,14 @@
+import LoginButton from "@/components/ui-elements/login-button";
+
 export default function Header() {
   return (
-    <header className="border-b p-4">
-      <h1 className="text-2xl font-bold">Todo App</h1>
+    <header className="flex items-center justify-between border-b p-4">
+      <div>
+        <h1 className="text-2xl font-bold">Todo App</h1>
+      </div>
+      <div>
+        <LoginButton />
+      </div>
     </header>
   );
 }
