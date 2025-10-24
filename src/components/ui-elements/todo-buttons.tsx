@@ -29,6 +29,7 @@ import {
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field";
+import { v7 as createUUID } from "uuid";
 
 async function addTask({
   name,
@@ -39,13 +40,15 @@ async function addTask({
   color: ColorList;
   uid: string;
 }) {
+  const taskUUID = createUUID();
   const newTask: TaskType = {
     name: name,
     color: color,
     totalDurationSeconds: 0,
     status: "todo",
   };
-  await setDoc(doc(db, "tasks", uid), newTask);
+  const ref = doc(db, uid, "userInfo", "tasks", taskUUID);
+  await setDoc(ref, newTask);
 }
 
 const formSchema = z.object({

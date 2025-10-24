@@ -7,15 +7,15 @@ export type TaskType = {
   status: "todo" | "doing" | "done";
 };
 
+type UserFileType = {
+  name: string;
+  tasks: TaskFileType;
+};
+
+type TaskFileType = TaskType[];
+
 export type FirestoreType = {
-  users: {
-    [id: string]: {
-      name: string;
-    };
-  };
-  tasks: {
-    [id: string]: {
-      [id: string]: TaskType;
-    };
+  [id: string]: {
+    userInfo: UserFileType;
   };
 };
