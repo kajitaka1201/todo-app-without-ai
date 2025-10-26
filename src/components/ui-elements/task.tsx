@@ -21,7 +21,7 @@ export default function Task({
   };
 
   return (
-    <div id={id} className={cn(colorVariants[color])}>
+    <div key={id} className={cn(colorVariants[color])}>
       <p>{name}</p>
       <p>時間:{duration}秒</p>
     </div>

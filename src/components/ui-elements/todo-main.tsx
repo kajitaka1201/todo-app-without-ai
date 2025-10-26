@@ -22,6 +22,7 @@ export default function TodoMain({ uid }: { uid: string }) {
               name={task.name}
               color={task.color}
               duration={task.totalDurationSeconds}
+              key={task.id}
             />
           ))}
         </div>
@@ -36,6 +37,7 @@ export default function TodoMain({ uid }: { uid: string }) {
               name={task.name}
               color={task.color}
               duration={task.totalDurationSeconds}
+              key={task.id}
             />
           ))}
         </div>
@@ -50,6 +52,7 @@ export default function TodoMain({ uid }: { uid: string }) {
               name={task.name}
               color={task.color}
               duration={task.totalDurationSeconds}
+              key={task.id}
             />
           ))}
         </div>
