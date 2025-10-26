@@ -7,13 +7,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { deleteTask } from "@/functions/deleteTask";
 
 export default function Task({
+  uid,
   id,
   name,
   color,
   duration,
 }: {
+  uid: string;
   id: string;
   name: string;
   color: ColorList;
@@ -38,13 +41,15 @@ export default function Task({
           Time: {Math.floor(duration / 60)}m {duration % 60}s
         </p>
       </div>
-      <div className="flex-0">
+      <div className="algin-center flex flex-0 items-center">
         <DropdownMenu>
           <DropdownMenuTrigger>
             <PiDotsThree size={24} />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem>削除</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => deleteTask(uid, id)}>
+              削除
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

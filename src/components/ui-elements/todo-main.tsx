@@ -15,17 +15,17 @@ export default function TodoMain({ uid }: { uid: string }) {
     <div className="flex h-full">
       <div className="w-1/3 p-2">
         <h2 className="text-xl font-bold">Todo</h2>
-        <TaskList tasks={todoTasks} />
+        <TaskList uid={uid} tasks={todoTasks} />
       </div>
       <Separator orientation="vertical" />
       <div className="w-1/3 p-2">
         <h2 className="text-xl font-bold">Doing</h2>
-        <TaskList tasks={doingTasks} />
+        <TaskList uid={uid} tasks={doingTasks} />
       </div>
       <Separator orientation="vertical" />
       <div className="w-1/3 p-2">
         <h2 className="text-xl font-bold">Done</h2>
-        <TaskList tasks={doneTasks} />
+        <TaskList uid={uid} tasks={doneTasks} />
       </div>
     </div>
   );
