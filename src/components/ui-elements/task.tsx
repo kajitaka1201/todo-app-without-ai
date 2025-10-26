@@ -1,5 +1,12 @@
 import { cn } from "@/lib/utils";
 import type { ColorList } from "@/types/firestore";
+import { PiDotsThree } from "react-icons/pi";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function Task({
   id,
@@ -21,9 +28,26 @@ export default function Task({
   };
 
   return (
-    <div key={id} className={cn(colorVariants[color])}>
-      <p>{name}</p>
-      <p>時間:{duration}秒</p>
+    <div
+      key={id}
+      className={cn(colorVariants[color], "flex items-center rounded p-2")}
+    >
+      <div className="flex-1">
+        <p>{name}</p>
+        <p className="text-xs text-gray-500">
+          Time: {Math.floor(duration / 60)}m {duration % 60}s
+        </p>
+      </div>
+      <div className="flex-0">
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <PiDotsThree size={24} />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem>削除</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
     </div>
   );
 }
