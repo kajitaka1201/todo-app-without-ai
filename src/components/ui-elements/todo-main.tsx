@@ -12,7 +12,7 @@ export default function TodoMain({ uid }: { uid: string }) {
   const doneTasks = tasks.filter((task) => task.status === "done");
 
   return (
-    <div className="flex h-full">
+    <div className="flex flex-1">
       <div className="w-1/3 p-2">
         <h2 className="text-xl font-bold">Todo</h2>
         <TaskList uid={uid} tasks={todoTasks} />

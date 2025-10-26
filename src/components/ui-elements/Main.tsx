@@ -11,9 +11,9 @@ export default function Main() {
   });
 
   return (
-    <main className="mx-auto p-4">
+    <main className="mx-auto w-full flex-1 px-4">
       {user ? (
-        <div>
+        <div className="flex h-full flex-col">
           <TodoButtons uid={user.uid} />
           <TodoMain uid={user.uid} />
         </div>

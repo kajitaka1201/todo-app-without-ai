@@ -81,7 +81,7 @@ export default function TodoButtons({ uid }: { uid: string }) {
   }
 
   return (
-    <div>
+    <div className="flex-0">
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
           <Button>タスクを追加する</Button>
