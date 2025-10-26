@@ -3,7 +3,6 @@ import type { ColorList, TaskType } from "@/types/firestore";
 import { doc, setDoc } from "firebase/firestore";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -30,6 +29,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { v7 as createUUID } from "uuid";
+import { useState } from "react";
 
 async function addTask({
   name,
@@ -64,14 +64,25 @@ export default function TodoButtons({ uid }: { uid: string }) {
       color: "red",
     },
   });
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
   function onSubmit(data: z.infer<typeof formSchema>) {
-    addTask({ name: data.name, color: data.color as ColorList, uid: uid });
+    setIsDialogOpen(false);
+    form.reset();
+    addTask({
+      name: data.name,
+      color: data.color as ColorList,
+      uid: uid,
+    });
+  }
+  function cancel() {
+    setIsDialogOpen(false);
+    form.reset();
   }
 
   return (
     <div>
-      <Dialog>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
           <Button>タスクを追加する</Button>
         </DialogTrigger>
@@ -138,9 +149,9 @@ export default function TodoButtons({ uid }: { uid: string }) {
           </form>
           <DialogFooter>
             <Field orientation="horizontal">
-              <DialogClose asChild>
-                <Button variant="outline">キャンセル</Button>
-              </DialogClose>
+              <Button variant="outline" onClick={cancel}>
+                キャンセル
+              </Button>
               <Button type="submit" form="task-addition">
                 タスクを追加する
               </Button>
