@@ -18,6 +18,7 @@ export default function TodoMain({ uid }: { uid: string }) {
         <div>
           {todoTasks?.map((task) => (
             <Task
+              id={task.id}
               name={task.name}
               color={task.color}
               duration={task.totalDurationSeconds}
@@ -31,6 +32,7 @@ export default function TodoMain({ uid }: { uid: string }) {
         <div>
           {doingTasks?.map((task) => (
             <Task
+              id={task.id}
               name={task.name}
               color={task.color}
               duration={task.totalDurationSeconds}
@@ -44,10 +46,10 @@ export default function TodoMain({ uid }: { uid: string }) {
         <div>
           {doneTasks?.map((task) => (
             <Task
+              id={task.id}
               name={task.name}
               color={task.color}
               duration={task.totalDurationSeconds}
-              key={task.id}
             />
           ))}
         </div>

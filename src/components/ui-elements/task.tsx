@@ -2,10 +2,12 @@ import { cn } from "@/lib/utils";
 import type { ColorList } from "@/types/firestore";
 
 export default function Task({
+  id,
   name,
   color,
   duration,
 }: {
+  id: string;
   name: string;
   color: ColorList;
   duration: number;
@@ -19,7 +21,7 @@ export default function Task({
   };
 
   return (
-    <div className={cn(colorVariants[color])}>
+    <div id={id} className={cn(colorVariants[color])}>
       <p>{name}</p>
       <p>時間:{duration}秒</p>
     </div>
