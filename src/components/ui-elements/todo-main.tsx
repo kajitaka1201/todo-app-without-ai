@@ -13,17 +13,17 @@ export default function TodoMain({ uid }: { uid: string }) {
 
   return (
     <div className="flex flex-1">
-      <div className="w-1/3 p-2">
+      <div className="flex w-1/3 flex-col gap-4 p-2">
         <h2 className="text-xl font-bold">Todo</h2>
         <TaskList uid={uid} tasks={todoTasks} />
       </div>
       <Separator orientation="vertical" />
-      <div className="w-1/3 p-2">
+      <div className="flex w-1/3 flex-col gap-4 p-2">
         <h2 className="text-xl font-bold">Doing</h2>
         <TaskList uid={uid} tasks={doingTasks} />
       </div>
       <Separator orientation="vertical" />
-      <div className="w-1/3 p-2">
+      <div className="flex w-1/3 flex-col gap-4 p-2">
         <h2 className="text-xl font-bold">Done</h2>
         <TaskList uid={uid} tasks={doneTasks} />
       </div>

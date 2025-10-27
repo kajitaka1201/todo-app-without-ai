@@ -8,6 +8,19 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { deleteTask } from "@/functions/deleteTask";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "@/firebase";
+import { LuPlay } from "react-icons/lu";
+import { LuPause } from "react-icons/lu";
+
+async function startTask(uid: string, taskId: string) {
+  const ref = doc(db, uid, "userInfo", "tasks", taskId);
+  await updateDoc(ref, { status: "doing" });
+}
+async function finishTask(uid: string, taskId: string) {
+  const ref = doc(db, uid, "userInfo", "tasks", taskId);
+  await updateDoc(ref, { status: "done" });
+}
 
 export default function Task({
   uid,
@@ -15,12 +28,14 @@ export default function Task({
   name,
   color,
   duration,
+  status,
 }: {
   uid: string;
   id: string;
   name: string;
   color: ColorList;
   duration: number;
+  status: "todo" | "doing" | "done";
 }) {
   const colorVariants = {
     red: "bg-red-200",
@@ -41,7 +56,11 @@ export default function Task({
           Time: {Math.floor(duration / 60)}m {duration % 60}s
         </p>
       </div>
-      <div className="algin-center flex flex-0 items-center">
+      <div className="algin-center flex flex-0 items-center gap-1">
+        {status === "todo" && <LuPlay onClick={() => startTask(uid, id)} />}
+        {status === "doing" && <LuPause onClick={() => finishTask(uid, id)} />}
+        {status === "done" && <LuPlay onClick={() => startTask(uid, id)} />}
+
         <DropdownMenu>
           <DropdownMenuTrigger>
             <PiDotsThree size={24} />
