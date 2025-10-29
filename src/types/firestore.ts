@@ -5,6 +5,7 @@ export type TaskType = {
   color: ColorList;
   totalDurationSeconds: number;
   status: "todo" | "doing" | "done";
+  startTime?: Date;
 };
 
 type UserFileType = {

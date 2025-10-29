@@ -8,17 +8,32 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { deleteTask } from "@/functions/deleteTask";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import { LuPlay } from "react-icons/lu";
 import { LuPause } from "react-icons/lu";
 
 async function startTask(uid: string, taskId: string) {
   const ref = doc(db, uid, "userInfo", "tasks", taskId);
-  await updateDoc(ref, { status: "doing" });
+  await updateDoc(ref, { status: "doing", startTime: Date.now() });
 }
 async function finishTask(uid: string, taskId: string) {
   const ref = doc(db, uid, "userInfo", "tasks", taskId);
+
+  const currentDataSnap = await getDoc(
+    doc(db, uid, "userInfo", "tasks", taskId),
+  );
+  if (currentDataSnap.exists()) {
+    const currentData = currentDataSnap.data();
+    if (currentData.startTime) {
+      const duration =
+        currentData.totalDurationSeconds +
+        Math.floor((Date.now() - currentData.startTime) / 1000);
+      await updateDoc(ref, {
+        totalDurationSeconds: duration,
+      });
+    }
+  }
   await updateDoc(ref, { status: "done" });
 }
 
