@@ -5,7 +5,9 @@ import path from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/todo-app-without-ai/",
+  base: process.env.GITHUB_PAGES
+    ? 'todo-app-without-ai'
+    : './',
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
