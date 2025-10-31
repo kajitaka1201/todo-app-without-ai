@@ -18,6 +18,7 @@ export default function TaskList({
           color={task.color}
           duration={task.totalDurationSeconds}
           status={task.status}
+          startTime={task.startTime}
           key={task.id}
         />
       ))}

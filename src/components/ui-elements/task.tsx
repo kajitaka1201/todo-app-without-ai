@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { deleteTask } from "@/functions/deleteTask";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import { LuPlay } from "react-icons/lu";
 import { LuPause } from "react-icons/lu";
@@ -17,24 +17,20 @@ async function startTask(uid: string, taskId: string) {
   const ref = doc(db, uid, "userInfo", "tasks", taskId);
   await updateDoc(ref, { status: "doing", startTime: Date.now() });
 }
-async function finishTask(uid: string, taskId: string) {
+async function finishTask(
+  uid: string,
+  taskId: string,
+  duration: number,
+  startTime: Date | undefined,
+) {
   const ref = doc(db, uid, "userInfo", "tasks", taskId);
-
-  const currentDataSnap = await getDoc(
-    doc(db, uid, "userInfo", "tasks", taskId),
-  );
-  if (currentDataSnap.exists()) {
-    const currentData = currentDataSnap.data();
-    if (currentData.startTime) {
-      const duration =
-        currentData.totalDurationSeconds +
-        Math.floor((Date.now() - currentData.startTime) / 1000);
-      await updateDoc(ref, {
-        totalDurationSeconds: duration,
-      });
-    }
+  if (startTime) {
+    const newDuration =
+      duration + Math.floor((Date.now() - Number(startTime)) / 1000);
+    await updateDoc(ref, { status: "done", totalDurationSeconds: newDuration });
+  } else {
+    await updateDoc(ref, { status: "done" });
   }
-  await updateDoc(ref, { status: "done" });
 }
 
 export default function Task({
@@ -44,6 +40,7 @@ export default function Task({
   color,
   duration,
   status,
+  startTime,
 }: {
   uid: string;
   id: string;
@@ -51,6 +48,7 @@ export default function Task({
   color: ColorList;
   duration: number;
   status: "todo" | "doing" | "done";
+  startTime?: Date;
 }) {
   const colorVariants = {
     red: "bg-red-200",
@@ -73,7 +71,9 @@ export default function Task({
       </div>
       <div className="algin-center flex flex-0 items-center gap-1">
         {status === "todo" && <LuPlay onClick={() => startTask(uid, id)} />}
-        {status === "doing" && <LuPause onClick={() => finishTask(uid, id)} />}
+        {status === "doing" && (
+          <LuPause onClick={() => finishTask(uid, id, duration, startTime)} />
+        )}
         {status === "done" && <LuPlay onClick={() => startTask(uid, id)} />}
 
         <DropdownMenu>
